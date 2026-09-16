@@ -56,7 +56,9 @@ public class EEGModel {
 	 * @param measurements The Measurements that make up the EEGModel.
 	 */
 	public EEGModel(Measurement[] measurements) {
-		// TODO
+		for(Measurement m: measurements) {
+			this.measurements.add(m);
+		}
 		
 	}
 
@@ -89,9 +91,7 @@ public class EEGModel {
 	 * @return The new EEGModel.
 	 */
 	public EEGModel filter(Filter filter) {
-		// TODO
-		
-		return null;
+		return filter.applyFilter(this);
 	}
 
 	/**
@@ -130,7 +130,21 @@ public class EEGModel {
 	 * @throws IOException Thrown if the file can't be written.
 	 */
 	public void saveFile(String fileName) throws IOException {
-		// TODO
+		File f = new File(fileName); //se crea el file con el nombre que nos dan, pero vacio, mas bien seria como la ruta
+	    FileOutputStream fos = new FileOutputStream(f); //Esto sí abre el archivo para escritura, en bytes crudos. Si el archivo f no existe, lo crea; si ya existe, lo sobreescribe desde cero.
+	    PrintStream ps = new PrintStream(fos);//PrintStream es una capa encima que te permite usar print/println con texto normal (como haces con System.out), y por debajo se encarga de convertir ese texto a bytes y mandarlo a fos.
+
+	    for (int i = 0; i < measurements.size(); i++) {
+	        Measurement m = measurements.get(i);
+	        StringBuilder line = new StringBuilder(); //Vas a construir la línea de texto trozo a trozo
+	        line.append(i % 256);
+	        for (int c = 0; c < m.numChannels(); c++) {
+	            line.append(", ").append(m.getChannel(c));
+	        }
+	        ps.println(line.toString());
+	    }
+
+	    ps.close();
 		
 	}
 
