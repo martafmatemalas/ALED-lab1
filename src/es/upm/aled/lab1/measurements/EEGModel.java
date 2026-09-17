@@ -27,11 +27,13 @@ public class EEGModel {
 
 	protected List<Measurement> measurements = new ArrayList<Measurement>();
 	protected EEG_GUI gui;
-
+	 
+   
 	/**
 	 * Builds an empty EEGModel.
 	 */
 	public EEGModel() {
+		
 	}
 
 	/**
@@ -91,7 +93,10 @@ public class EEGModel {
 	 * @return The new EEGModel.
 	 */
 	public EEGModel filter(Filter filter) {
-		return filter.applyFilter(this);
+		if(filter != null) {
+			return filter.applyFilter(this);
+		}
+		return null;
 	}
 
 	/**
