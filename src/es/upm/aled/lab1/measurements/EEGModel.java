@@ -34,6 +34,7 @@ public class EEGModel {
 	 */
 	public EEGModel() {
 		
+		
 	}
 
 	/**
@@ -268,12 +269,16 @@ public class EEGModel {
 		if (args.length > 0) {
 			EEGModel eeg = new EEGModel(args[0]);
 			eeg.plotData();
-			// TODO
 			
 		} else {
 			EEGModel eeg = new EEGModel();
 			eeg.createSyntheticData(1000);
-			// TODO
+			try {
+		        eeg.saveFile("Synthetic.txt");
+		    } catch (IOException e) {
+		        System.out.println("Error saving to file.");
+		        e.printStackTrace();
+		    }
 			
 		}
 	}

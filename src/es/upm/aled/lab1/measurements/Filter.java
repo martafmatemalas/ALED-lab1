@@ -6,7 +6,7 @@ package es.upm.aled.lab1.measurements;
  * @author mmiguel, rgarciacarmona
  *
  */
-public interface Filter {
+public interface Filter{
 
 	/**
 	 * Applies the filter over a given EEG model and returns a new one.
