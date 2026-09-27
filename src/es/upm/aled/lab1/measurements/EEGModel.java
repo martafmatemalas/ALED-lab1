@@ -269,7 +269,19 @@ public class EEGModel {
 		if (args.length > 0) {
 			EEGModel eeg = new EEGModel(args[0]);
 			eeg.plotData();
-			
+			int validChannels[] = {8,9,10};
+			Filter filtradoCanales = new FilterExtractChannels(validChannels);
+			int min = 2750;
+			int max = 5750;
+			Filter filtradoPeriodos = new FilterExtractPeriod(min, max);
+			EEGModel filtrado = eeg.filter(filtradoCanales).filter(filtradoPeriodos);
+			filtrado.plotData();
+			try {
+				filtrado.saveFile("FilteredData.txt");
+			} catch(IOException e) {
+				System.out.println("Se ha cometido un error al escribir en el archivo");
+				e.printStackTrace();
+			}
 		} else {
 			EEGModel eeg = new EEGModel();
 			eeg.createSyntheticData(1000);
